@@ -1,5 +1,5 @@
 ## Learning Resources I have used
-/play trombone
+
  :shipit: Not all resources have been mentioned yet  :shipit:
 ### Javascript Resources
 - Callback Functions [Link](https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced)
