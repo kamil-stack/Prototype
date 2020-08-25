@@ -1,5 +1,6 @@
 # Prototype
 Modules Being Used: express, mongoose, ejs, dotenv, body-parser
+Things Implemented: Login Site(Just A Site No Working Function Yet), Quiz Create (Only Create Code, Name and amount of questions), Quiz Play (You are able to play a test quiz which is dynamically loaded), Connection To MongoDB server. Schematica For Questions and quiz. Attempted JWT.
 
 
 Model For Quiz Question:
