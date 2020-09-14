@@ -17,7 +17,7 @@ var quiz = [];
 const secret = "fdsgjnsdgsdg!3rfr2ef2"
 
 const Quiz = require('./quiz') 
-app.use('/quiz/', Quiz) 
+app.use(Quiz) 
 
 mongoose.connect(process.env.QUIZDB, { useUnifiedTopology: true,useNewUrlParser: true})
 const quizdb = mongoose.connection;
