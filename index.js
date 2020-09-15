@@ -4,6 +4,7 @@ Modules {
     ejs: Embedded Javascript(Make Site Dynamic)
 }*/
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -14,10 +15,10 @@ const ejs = require('ejs');
 var port = 3333; // Port 3333 for testing cause linux needs root for ports like 80
 var quiz = [];
 
-const secret = "fdsgjnsdgsdg!3rfr2ef2"
+
 
 const Quiz = require('./quiz') 
-app.use(Quiz) 
+app.use(Quiz);
 
 mongoose.connect(process.env.QUIZDB, { useUnifiedTopology: true,useNewUrlParser: true})
 const quizdb = mongoose.connection;
@@ -42,8 +43,44 @@ app.get('/', (req, res) => {
 app.get('/login', (req,res) => {
     res.sendFile(__dirname + '/views/login.html');
 })
+app.get('/register', (req,res) => {
+    if (req.query.status == "error"){
+        res.write("Error Try Again")
+        res.sendFile(__dirname + '/views/register.html');
+    }else{
+        res.sendFile(__dirname + '/views/register.html');
+    }
+})
+
+
+app.post('/register', (req, res) => {
+    fs.readFile('./users.txt', 'utf8', function (err,data) {
+    if (err) {
+        return console.log(err);
+        res.send("Error Retry")
+    }
+    if (data.indexOf(((req.body.username).toUpperCase())+":") !== -1){
+        res.redirect('/register/status?=error')
+    }else{
+        fs.appendFileSync('./users.txt', ("\n"+((req.body.username).toUpperCase())+":"+req.body.password));
+        res.redirect("/play/?user=" + req.body.username)
+    }
+    })
+});
+
 app.post('/login', (req, res) => {
-    res.send("Not Ready")
+    fs.readFile('./users.txt', 'utf8', function (err,data) {
+    if (err) {
+        return console.log(err);
+    }
+    if (data.indexOf((req.body.username).toUpperCase()+":"+req.body.password) !== -1){
+        console.log("welcome",req.body.username)
+        global.user = req.body.username;
+        res.redirect("/play/?user=" + req.body.username)
+    }else{
+        res.write("Incorrect Login")
+    }
+    })
 });
 
 
