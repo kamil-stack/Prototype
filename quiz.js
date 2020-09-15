@@ -46,24 +46,46 @@ let createquiz = (req, res,) => {
         var d;
         choice.length = noq; 
         for (d = 0; d < noq; d++){
-            eval("var question"+d+" = {question: req.body.q"+d+", answer: req.body.answer"+d+", choices:[] }");
+            eval("var question"+d+" = {question: req.body.q"+d+", answer: req.body.answer"+d+" }");
             eval("var c = req.body.choices"+d+".split(',')");
             //var e = c.split(",");
             eval("question"+d+".choices = c");
         }
         res.end()
         var cq = 0;
-        //console.log(req.body.answer2)
+        console.log(question0)
+        console.log(question1)
+
     })
 }
 
 router.post('/CreateQuiz', createquiz);
 
+// test quiz data
+let question_number = ['1','2']
+let quiz_question = ["What Is The Colour Of The Sky?","What Is The Capital Of England?"];
+let choice = [['Blue', 'Red','Green','Pink'],['Moscow','Paris','London','Berlin']];
+let answer = ['Blue','London'];
+global.cq = 1;
+global.correct = 0;
 
 
 router.get('/play', (req, res)=>{
-    console.log("Pog")
+    if (cq > 2){
+        res.send(`Hello, You Got ${correct}/${cq-1}<br><form action="/reset" method="post"><input type="submit" value="Reset"></form>`)
+        res.end()
+    }else{
+        res.render(__dirname + '/views/quiz', {cq,quiz_question, choice});
+        console.log(cq);
+    }
 });
+
+router.post('/reset', (req,res) =>{
+    global.cq = 1;
+    global.correct = 0;
+    console.log("gg")
+    res.redirect("/play")    
+})
 
 router.post('/play', (req, res) => {
     if (req.body.box == answer[cq-1]){
@@ -75,7 +97,6 @@ router.post('/play', (req, res) => {
         res.redirect('play') 
     }
 })
-
-
-
+    
+    
 module.exports = router
