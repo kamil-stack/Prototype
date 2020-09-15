@@ -36,3 +36,9 @@ Guests Are allowed to particpate in a quiz however they're not able to create a 
 
 ## Notes
 After making this prototype I have realised there is a better solution to this and that is using websocket because this will allow me to do the realtime questions and answers much more easier to make and effiecent.
+
+
+## Things That Work
+- You can create a quiz with a name,a code, 1-10 questions. (Dynamic Loading Quiz Maker)
+- You can play a test quiz. (Which can be reset)(Test Quiz Loads Dynamically)
+- You could do a login
